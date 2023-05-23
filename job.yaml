@@ -12,10 +12,10 @@ spec:
           resources:
             limits:
               memory: 10Gi
-              nvidia.com/gpu: 1
+              nvidia.com/gpu: "1"
             requests:
               memory: 10Gi
-              nvidia.com/gpu: 1
+              nvidia.com/gpu: "1"
       restartPolicy: Never
       tolerations:
         - key: nvidia.com/gpu
