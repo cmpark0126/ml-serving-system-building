@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: gpu-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: gpu-job
+          image: nvcr.io/nvidia/k8s/cuda-sample:vectoradd-cuda10.2
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+            requests:
+              nvidia.com/gpu: 1
+      restartPolicy: Never
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: "node.kubernetes.io/instance-type"
+                    operator: "In"
+                    values: ["g5.xlarge"] # g4dn.xlarge for tesla t4, g5.xlarge for a10g
+                  - key: "karpenter.sh/capacity-type"
+                    operator: "In"
+                    values: ["spot"]
+  backoffLimit: 1
