@@ -1,0 +1,17 @@
+apiVersion: karpenter.k8s.aws/v1alpha1
+kind: AWSNodeTemplate
+metadata:
+  name: default
+spec:
+  subnetSelector:
+    karpenter.sh/discovery: hf-eks-cluster
+  securityGroupSelector:
+    karpenter.sh/discovery: hf-eks-cluster
+  blockDeviceMappings:
+    - deviceName: /dev/xvda
+      ebs:
+        volumeSize: 50Gi
+        volumeType: gp3
+        iops: 3000
+        throughput: 125
+        deleteOnTermination: true

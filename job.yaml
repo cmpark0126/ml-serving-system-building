@@ -7,11 +7,14 @@ spec:
     spec:
       containers:
         - name: gpu-job
-          image: nvcr.io/nvidia/k8s/cuda-sample:vectoradd-cuda10.2
+          image: nvcr.io/nvidia/tritonserver:22.05-pyt-python-py3
+          command: ["sh", "-c", "echo 'Hello, World!' && sleep 7200"]
           resources:
             limits:
+              memory: 10Gi
               nvidia.com/gpu: 1
             requests:
+              memory: 10Gi
               nvidia.com/gpu: 1
       restartPolicy: Never
       tolerations:
@@ -25,7 +28,7 @@ spec:
               - matchExpressions:
                   - key: "node.kubernetes.io/instance-type"
                     operator: "In"
-                    values: ["g5.xlarge"] # g4dn.xlarge for tesla t4, g5.xlarge for a10g
+                    values: ["g4dn.xlarge"] # g4dn.xlarge for tesla t4, g5.xlarge for a10g
                   - key: "karpenter.sh/capacity-type"
                     operator: "In"
                     values: ["spot"]
