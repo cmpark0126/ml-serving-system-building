@@ -8,7 +8,13 @@ spec:
       containers:
         - name: gpu-job
           image: cmpark0126/eks-triton-test:1st
-          command: ["sh", "-c", "echo 'Hello, World!' && sleep 7200"]
+          # command: ["sh", "-c", "echo 'Hello, World!' && sleep 7200"]
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              python tutorials/Quick_Deploy/PyTorch/export.py
+              mv model.pt models/resnet50/1/model.pt
+              tritonserver --model-repository models --allow-metrics true --allow-gpu-metrics true
           resources:
             limits:
               memory: 10Gi

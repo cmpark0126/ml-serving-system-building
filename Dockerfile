@@ -10,4 +10,8 @@ RUN pip install torch==1.13.1 pillow
 
 # prepare model repository
 
-CMD ["tritonserver", "--model-repository", "models", "--allow-metrics", "true", "--allow-gpu-metrics", "true" ]
+RUN git clone https://github.com/triton-inference-server/tutorials.git
+RUN mkdir models
+RUN mkdir models/resnet50
+RUN mkdir models/resnet50/1
+RUN mv tutorials/Quick_Deploy/PyTorch/config.pbtxt models/resnet50/config.pbtxt
