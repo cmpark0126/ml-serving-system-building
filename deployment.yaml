@@ -1,14 +1,20 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: triton-inference-server
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: triton-inference-server
   template:
+    metadata:
+      labels:
+        app: triton-inference-server
     spec:
       containers:
         - name: triton-inference-server
           image: cmpark0126/eks-triton-test:1st
-          # command: ["sh", "-c", "echo 'Hello, World!' && sleep 7200"]
           command: ["/bin/bash", "-c"]
           args:
             - |
@@ -17,12 +23,13 @@ spec:
               tritonserver --model-repository models --allow-metrics true --allow-gpu-metrics true
           resources:
             limits:
+              cpu: "3"
               memory: 10Gi
               nvidia.com/gpu: "1"
             requests:
+              cpu: "3"
               memory: 10Gi
               nvidia.com/gpu: "1"
-      restartPolicy: Never
       tolerations:
         - key: nvidia.com/gpu
           operator: Exists
@@ -38,4 +45,3 @@ spec:
                   - key: "karpenter.sh/capacity-type"
                     operator: "In"
                     values: ["spot"]
-  backoffLimit: 1
