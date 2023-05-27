@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
         - name: triton-inference-server
-          image: cmpark0126/eks-triton-test:1st
+          image: cmpark0126/eks-triton-test:23.04-py3
           # command: ["sh", "-c", "echo 'Hello, World!' && sleep 7200"]
           command: ["/bin/bash", "-c"]
           args:

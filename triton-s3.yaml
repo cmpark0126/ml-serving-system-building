@@ -8,7 +8,7 @@ spec:
       serviceAccountName: s3-full-access-role
       containers:
         - name: triton-inference-server-s3
-          image: cmpark0126/eks-triton-test:1st
+          image: cmpark0126/eks-triton-test:23.04-py3
           command:
             [
               "tritonserver",

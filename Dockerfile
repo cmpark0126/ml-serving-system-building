@@ -1,5 +1,4 @@
-# TODO: need to update to latest version
-FROM nvcr.io/nvidia/tritonserver:22.04-py3
+FROM nvcr.io/nvidia/tritonserver:23.04-py3
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A4B469963BF863CC
 RUN apt-get update
