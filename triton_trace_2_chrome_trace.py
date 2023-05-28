@@ -23,8 +23,8 @@ def convert_to_chrome_trace(triton_events):
 
         chrome_event = {
             'cat': "resnet50",
-            'name': str(event['id']),
-            'id': str(event['id']),
+            'name': f"{event['id']:04}",
+            'id': f"{event['id']:04}",
             'ph': ph,
             # convert to micro second
             'ts': event['timestamps'][0]['ns'] * 0.001,
