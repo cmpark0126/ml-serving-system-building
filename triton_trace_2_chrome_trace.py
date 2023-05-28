@@ -1,4 +1,5 @@
 import json
+import argparse
 
 
 def parse_triton_trace(triton_trace_file):
@@ -40,9 +41,11 @@ def write_chrome_trace(chrome_trace_events, output_file):
         json.dump(chrome_trace_events, f)
 
 
-triton_trace_file = 'triton_trace.json'  # replace with your Triton trace file
-chrome_trace_file = 'chrome_trace.json'  # replace with your output file
+parser = argparse.ArgumentParser()
+parser.add_argument('--triton', type=str)
+parser.add_argument('--chrome', type=str, default='chrome_trace.json')
+args = parser.parse_args()
 
-triton_events = parse_triton_trace(triton_trace_file)
+triton_events = parse_triton_trace(args.triton)
 chrome_trace_events = convert_to_chrome_trace(triton_events)
-write_chrome_trace(chrome_trace_events, chrome_trace_file)
+write_chrome_trace(chrome_trace_events, args.chrome)
