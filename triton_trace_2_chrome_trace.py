@@ -15,20 +15,21 @@ def convert_to_chrome_trace(triton_events):
             continue
         name = event['timestamps'][0]['name']
         if name == "HTTP_RECV_START":
-            ph = "B"
+            ph = "b"
         elif name == "HTTP_SEND_END":
-            ph = "E"
+            ph = "e"
         else:
             continue
 
         chrome_event = {
+            'cat': "resnet50",
             'name': str(event['id']),
+            'id': str(event['id']),
             'ph': ph,
             # convert to micro second
             'ts': event['timestamps'][0]['ns'] * 0.001,
             # TODO: add exact value
             'pid': 0,
-            'tid': 0
         }
         chrome_trace_events.append(chrome_event)
     return chrome_trace_events
