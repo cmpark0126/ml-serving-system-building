@@ -3,22 +3,20 @@ kind: Ingress
 metadata:
   name: server-ingress
   annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/healthcheck-path: /v2/health/live
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
-  ingressClassName: alb
+  ingressClassName: nginx
   rules:
     - http:
         paths:
-        - path: /server1
+        - path: /server1(/|$)(.*)
           pathType: Prefix
           backend:
             service:
               name: server-1
               port:
                 number: 8000
-        - path: /server2
+        - path: /server2(/|$)(.*)
           pathType: Prefix
           backend:
             service:

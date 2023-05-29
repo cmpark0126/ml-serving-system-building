@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: server-1
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
     - name: http
       port: 8000
@@ -22,7 +22,7 @@ kind: Service
 metadata:
   name: server-2
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
     - name: http
       port: 8000
