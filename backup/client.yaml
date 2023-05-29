@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
         - name: triton-inference-client
-          image: nvcr.io/nvidia/tritonserver:22.04-py3-sdk
+          image: nvcr.io/nvidia/tritonserver:23.04-py3-sdk
           command: ["sh", "-c", "echo 'Hello, World!' && sleep 7200"]
           resources:
             limits:
