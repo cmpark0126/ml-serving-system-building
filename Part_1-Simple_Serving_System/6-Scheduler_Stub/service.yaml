@@ -8,11 +8,5 @@ spec:
     - name: http
       port: 8000
       targetPort: 8000
-    - name: grpc
-      port: 8001
-      targetPort: 8001
-    - name: metric
-      port: 8002
-      targetPort: 8002
   selector:
     app: server-1
