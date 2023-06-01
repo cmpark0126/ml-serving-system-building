@@ -17,6 +17,7 @@ spec:
           - name: triton-inference-client
             image: python:3.9
             command: ["/bin/bash", "-c"]
+            # 0.0.0.0 은 모든 IPv4 주소에서 오는 연결을 수용하겠다는 의미
             args: [ "git clone https://github.com/cmpark0126/ml-serving-system-building && pip install -r ml-serving-system-building/Part_1-Simple_Serving_System/6-Scheduler_Stub/requirements.txt && mv ml-serving-system-building/Part_1-Simple_Serving_System/6-Scheduler_Stub/main.py main.py && uvicorn main:app --host 0.0.0.0 --port 8000" ]
             resources:
               limits:
