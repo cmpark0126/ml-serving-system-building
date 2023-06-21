@@ -42,5 +42,5 @@ class UserBehavior(TaskSet):
 # 한 번에 하나의 요청만 보냄
 class User(FastHttpUser):
     # : 뒤에 있는 값은 여러개의 taskset이 있을 때 가중치
-    tasks = {UserBehavior: 1} # type: ignore
+    tasks = {UserBehavior: 1}  # type: ignore
     wait_time = between(0.1, 0.2)

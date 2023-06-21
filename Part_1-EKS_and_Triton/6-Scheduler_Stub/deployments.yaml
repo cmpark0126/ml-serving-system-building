@@ -16,7 +16,8 @@ spec:
       containers:
         - name: server-1
           image: cmpark0126/eks-triton-test:23.04-py3
-          command: [
+          command:
+            [
               "tritonserver",
               "--model-repository",
               "s3://hf-s3/",
@@ -25,7 +26,7 @@ spec:
               "--allow-gpu-metrics",
               "true",
               "--log-verbose",
-              "1"
+              "1",
             ]
           resources:
             limits:
