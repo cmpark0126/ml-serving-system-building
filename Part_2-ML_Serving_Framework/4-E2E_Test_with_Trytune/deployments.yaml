@@ -15,8 +15,9 @@ spec:
       serviceAccountName: s3-full-access-role
       containers:
         - name: trytune
+          # TODO: use custom docker to launch fastapi application w/o sleep
           image: python:3.10.12-slim
-          command: ["sleep", "7600"]
+          command: ["sleep", "10800"]
           resources:
             limits:
               cpu: "16"
@@ -29,6 +30,61 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
+                  - key: "karpenter.sh/capacity-type"
+                    operator: "In"
+                    values: ["spot"]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: triton
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: triton
+  template:
+    metadata:
+      labels:
+        app: triton
+    spec:
+      serviceAccountName: s3-full-access-role
+      containers:
+        - name: triton
+          image: cmpark0126/eks-triton-test:23.04-py3
+          command:
+            [
+              "tritonserver",
+              "--model-repository",
+              "s3://hf-s3/",
+              "--allow-metrics",
+              "true",
+              "--allow-gpu-metrics",
+              "true",
+              "--log-verbose",
+              "1",
+            ]
+          resources:
+            limits:
+              cpu: "3"
+              memory: 10Gi
+              nvidia.com/gpu: "1"
+            requests:
+              cpu: "3"
+              memory: 10Gi
+              nvidia.com/gpu: "1"
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: "node.kubernetes.io/instance-type"
+                    operator: "In"
+                    values: ["g4dn.xlarge"] # g4dn.xlarge for tesla t4, g5.xlarge for a10g
                   - key: "karpenter.sh/capacity-type"
                     operator: "In"
                     values: ["spot"]

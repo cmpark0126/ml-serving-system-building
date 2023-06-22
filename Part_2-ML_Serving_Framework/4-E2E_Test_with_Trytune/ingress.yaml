@@ -16,6 +16,13 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: trytune
+                name: trytune3
                 port:
                   number: 80
+          - path: /triton(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: triton
+                port:
+                  number: 8000

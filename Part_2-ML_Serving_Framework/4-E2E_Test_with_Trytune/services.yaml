@@ -10,3 +10,16 @@ spec:
       targetPort: 80
   selector:
     app: trytune
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: triton
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+  selector:
+    app: triton
