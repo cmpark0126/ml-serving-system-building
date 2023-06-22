@@ -25,4 +25,4 @@ spec:
               service:
                 name: triton
                 port:
-                  number: 8000
+                  number: 80
