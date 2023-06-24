@@ -6,7 +6,7 @@ spec:
   requirements:
     - key: karpenter.k8s.aws/instance-category
       operator: In
-      values: [c, m, r, t, g]
+      values: [c, m, r, t, g, inf1, inf2]
     - key: karpenter.sh/capacity-type
       operator: In
       values: ["spot"]
