@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inferentia-compiler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inferentia-compiler
+  template:
+    metadata:
+      labels:
+        app: inferentia-compiler
+    spec:
+      serviceAccountName: s3-full-access-role
+      containers:
+        - name: inferentia-compiler
+          # TODO: use custom docker to launch fastapi application w/o sleep
+          image: 763104351884.dkr.ecr.us-east-1.amazonaws.com/tensorflow-inference-neuron:1.15.4-neuron-py37-ubuntu18.04
+          command: ["sleep", "10800"]
+          resources:
+            limits:
+              cpu: "3"
+              memory: 6Gi
+              aws.amazon.com/neuroncore: "4"
+            requests:
+              cpu: "3"
+              memory: 6Gi
+              aws.amazon.com/neuroncore: "4"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: "node.kubernetes.io/instance-type"
+                    operator: "In"
+                    values: ["inf1.xlarge"]
