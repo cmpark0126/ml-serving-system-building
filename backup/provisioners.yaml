@@ -6,7 +6,10 @@ spec:
   requirements:
     - key: karpenter.k8s.aws/instance-category
       operator: In
-      values: [c, m, r, t, g, inf1, inf2]
+      values: [c, m, r, t, g, inf]
+    - key: kubernetes.io/arch
+      operator: In
+      values: ["arm64", "amd64"]
     - key: karpenter.sh/capacity-type
       operator: In
       values: ["spot"]
